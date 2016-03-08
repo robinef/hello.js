@@ -371,7 +371,7 @@ hello.utils.extend(hello, {
 		}
 
 		// Convert state to a string
-		p.qs.state = encodeURIComponent(JSON.stringify(p.qs.state));
+		p.qs.state = encodeURIComponent(utf8ToB64(JSON.stringify(p.qs.state)));
 
 		// URL
 		if (parseInt(provider.oauth.version, 10) === 1) {
@@ -1324,7 +1324,7 @@ hello.utils.extend(hello.utils, {
 			// Remove any addition information
 			// E.g. p.state = 'facebook.page';
 			try {
-				var a = JSON.parse(p.state);
+				var a = JSON.parse(b64ToUtf8(p.state));
 				_this.extend(p, a);
 			}
 			catch (e) {
@@ -2532,6 +2532,14 @@ hello.utils.extend(hello.utils, {
 	var utils = hello.utils;
 
 	utils.extend(utils, {
+
+	//encode/decode base for SAMI
+	utf8ToB64 : function(str) {
+		return window.btoa(unescape(encodeURIComponent( str )));
+	},
+	b64ToUtf8 : function(str) {
+		return decodeURIComponent(escape(window.atob( str )));
+	},
 
 		// DataToJSON
 		// This takes a FormElement|NodeList|InputElement|MixedObjects and convers the data object to JSON.
