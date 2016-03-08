@@ -371,7 +371,7 @@ hello.utils.extend(hello, {
 		}
 
 		// Convert state to a string
-		p.qs.state = encodeURIComponent(utf8ToB64(JSON.stringify(p.qs.state)));
+		p.qs.state = encodeURIComponent(hello.utils.utf8ToB64(JSON.stringify(p.qs.state)));
 
 		// URL
 		if (parseInt(provider.oauth.version, 10) === 1) {
@@ -1324,7 +1324,7 @@ hello.utils.extend(hello.utils, {
 			// Remove any addition information
 			// E.g. p.state = 'facebook.page';
 			try {
-				var a = JSON.parse(b64ToUtf8(p.state));
+				var a = JSON.parse(hello.utils.b64ToUtf8(p.state));
 				_this.extend(p, a);
 			}
 			catch (e) {
